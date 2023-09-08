@@ -1,17 +1,20 @@
 import Link from "next/link";
 
-const Right = () => {
+type RightProps = {
+  onSubmit: (data: FormData) => Promise<void>;
+};
+const Right = ({ onSubmit }: RightProps) => {
   return (
-    <div className="w-6/12 flex flex-col justify-center p-24">
-      <div className="w-full">
-        <div className="w-2/4 mb-14">
+    <div className="w-6/12 flex flex-col justify-center items-center">
+      <div className="w-10/12">
+        <div className="w-10/12 mb-14">
           <h1 className="text-5xl font-black mb-6">Login</h1>
           <p className="text-gray-400 text-xl">
             Welcome back! Please login to your Account
           </p>
         </div>
         <div>
-          <form className="flex flex-col">
+          <form className="flex flex-col" action={onSubmit}>
             <span className=" mb-2.5 text-gray-400 font-semibold">
               User Name
             </span>
@@ -47,11 +50,12 @@ const Right = () => {
               </Link>
             </div>
 
-            <div className=" flex justify-center items-center p-4  mb-14 bg-violet-500 border rounded-xl">
-              <button className="text-white font-semibold" type="submit">
-                Login
-              </button>
-            </div>
+            <button
+              className="text-white font-semibold p-5 mb-14 bg-violet-500 border rounded-xl "
+              type="submit"
+            >
+              Login
+            </button>
           </form>
         </div>
       </div>
