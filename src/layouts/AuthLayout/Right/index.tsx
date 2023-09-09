@@ -1,17 +1,28 @@
 import Link from "next/link";
 
 type RightProps = {
-  onSubmit: (data: FormData) => Promise<boolean>;
+  onSubmit?: (data: FormData) => Promise<boolean>;
+  heading: string;
+  paragraph: string;
+  buttonLabel: string;
+  rightBottomLabelLeft: string;
+  rightBottomLabelRight: string;
 };
-const Right = ({ onSubmit }: RightProps) => {
+
+const Right = ({
+  onSubmit,
+  heading,
+  paragraph,
+  buttonLabel,
+  rightBottomLabelLeft,
+  rightBottomLabelRight,
+}: RightProps) => {
   return (
     <div className="w-6/12 flex flex-col justify-center items-center">
       <div className="w-10/12">
         <div className="w-10/12 mb-14">
-          <h1 className="text-5xl font-black mb-6">Login</h1>
-          <p className="text-gray-400 text-xl">
-            Welcome back! Please login to your Account
-          </p>
+          <h1 className="text-5xl font-black mb-6">{heading}</h1>
+          <p className="text-gray-400 text-xl">{paragraph}</p>
         </div>
         <div>
           <form className="flex flex-col" action={onSubmit}>
@@ -46,7 +57,7 @@ const Right = ({ onSubmit }: RightProps) => {
                 className="text-gray-400 font-semibold text-xs"
                 href="/none"
               >
-                Forgot Password?
+                Forget Password ?
               </Link>
             </div>
 
@@ -54,15 +65,17 @@ const Right = ({ onSubmit }: RightProps) => {
               className="text-white font-semibold p-5 mb-14 bg-violet-500 border rounded-xl "
               type="submit"
             >
-              Login
+              {buttonLabel}
             </button>
           </form>
         </div>
       </div>
       <div className="flex">
-        <span className="text-gray-400 font-semibold mr-2">New User?</span>
+        <span className="text-gray-400 font-semibold mr-2">
+          {rightBottomLabelLeft}
+        </span>
         <Link className="text-violet-500 font-semibold" href="none">
-          Signup
+          {rightBottomLabelRight}
         </Link>
       </div>
     </div>
