@@ -27,8 +27,11 @@ const doRegister = async (data: FormData) => {
   if (!userLen || userLen === 0 || !passwordLen || passwordLen === 0) {
     throw new Error("cosa");
   }
-  // riparti da qui domani
-  // PostRegister({ username, password });
+  const payload = {
+    username,
+    password,
+  };
+  PostRegister(payload);
 };
 
 type AuthPageProps = {

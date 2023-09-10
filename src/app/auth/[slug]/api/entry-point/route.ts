@@ -1,6 +1,6 @@
 type PostRegisterProps = {
-  username: string;
-  password: string;
+  username: string | object;
+  password: string | object;
 };
 
-export async function PostRegister(props: PostRegisterProps) {}
+export async function PostRegister(payload: PostRegisterProps) {}
