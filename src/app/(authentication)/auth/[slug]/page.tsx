@@ -1,38 +1,6 @@
 import { AuthLayout } from "@/layouts";
-import { checkAuthParam } from "../utils";
-import { PostRegister } from "./api/entry-point/route";
-
-const doLogin = async (data: FormData): Promise<boolean> => {
-  "use server";
-
-  const username = data.get("username")?.valueOf();
-  const userLen = username?.toLocaleString().length;
-  const password = data.get("password")?.valueOf();
-  const passwordLen = password?.toLocaleString().length;
-
-  if (!username || userLen === 0 || !password || passwordLen === 0) {
-    return false;
-  }
-
-  return true;
-};
-
-const doRegister = async (data: FormData) => {
-  "use server";
-  const username = data.get("username")?.valueOf();
-  const password = data.get("password")?.valueOf();
-  const userLen = username?.toLocaleString().length;
-  const passwordLen = password?.toLocaleString().length;
-
-  if (!userLen || userLen === 0 || !passwordLen || passwordLen === 0) {
-    throw new Error("cosa");
-  }
-  const payload = {
-    username,
-    password,
-  };
-  PostRegister(payload);
-};
+import { doRegister, checkAuthParam } from "../../utils/server/utils";
+// import { PostRegister } from "./api/auth/route";
 
 type AuthPageProps = {
   params: { slug: string };
