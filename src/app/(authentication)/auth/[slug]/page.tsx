@@ -1,12 +1,11 @@
 import { AuthLayout } from "@/layouts";
 import { doRegister, checkAuthParam } from "../../utils/server/utils";
-// import { PostRegister } from "./api/auth/route";
 
 type AuthPageProps = {
   params: { slug: string };
 };
 
-const AuthPage = ({ params }: AuthPageProps) => {
+const AuthPage = async ({ params }: AuthPageProps) => {
   const { slug } = params;
 
   if (slug !== "login" && slug !== "register") {
@@ -14,7 +13,7 @@ const AuthPage = ({ params }: AuthPageProps) => {
       "Looks like you have found the doorway to the great nothing"
     );
   }
-  const isLogin = checkAuthParam(slug);
+  const isLogin = await checkAuthParam(slug);
 
   const leftLabel = isLogin ? "Welcome Back!" : "Welcome Fella!";
   const rightTopHeading = isLogin ? "Login" : "Register";
