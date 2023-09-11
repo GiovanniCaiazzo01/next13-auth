@@ -25,12 +25,6 @@ const doRegister = async (data: FormData) => {
   const username = data.get("username")?.valueOf().toString();
   const password = data.get("password")?.valueOf().toString();
 
-  // const userLen = username?.toLocaleString().length;
-  // const passwordLen = password?.toLocaleString().length;
-  // if (!userLen || userLen === 0 || !passwordLen || passwordLen === 0) {
-  //   throw new Error("cosa");
-  // }
-
   const payload = {
     username,
     password,
