@@ -3,7 +3,6 @@ import { MongoClient, Db } from "mongodb";
 let db: Db;
 const connectDB = async () => {
   const { MONGODB_URI, MONGODB_NAME } = process.env;
-  console.log(MONGODB_URI, MONGODB_NAME);
 
   try {
     if (db) {
