@@ -1,5 +1,7 @@
 "use server";
-import { connectDB, db } from "../../../../../mongodb/db_connection";
+
+import { db, connectDB } from "../../../../../mongodb/db_connection";
+
 const USERS = "users";
 const addUser = async (user_data: {
   username: string;
@@ -21,7 +23,7 @@ const addUser = async (user_data: {
   return { result: true, message: "You are in, welcome ✨" };
 };
 
-const getUserByName = async (
+const getUserUsername = async (
   username: string
 ): Promise<{ result: boolean; data: {} | undefined }> => {
   await connectDB();
@@ -36,4 +38,39 @@ const getUserByName = async (
   return { result: true, data: user };
 };
 
-export { addUser, getUserByName };
+const getUserLoginEssentials = async (username: string) => {
+  await connectDB();
+  const user = await db.collection(USERS).findOne(
+    { username },
+    {
+      projection: {
+        _id: 0,
+        username: 1,
+        password: 1,
+        ucode: 1,
+        jwt_token: 1,
+      },
+    }
+  );
+  if (!user) {
+    return { result: false, data: undefined };
+  }
+  return { result: true, data: user };
+};
+
+// const getUserByName = async (
+//   username: string
+// ): Promise<{ result: boolean; data: {} | undefined }> => {
+//   await connectDB();
+
+//   const user = await db
+//     .collection(USERS)
+//     .findOne({ username }, { projection: { _id: 0, username: 1 } });
+
+//   if (!user) {
+//     return { result: false, data: undefined };
+//   }
+//   return { result: true, data: user };
+// };
+
+export { addUser, getUserUsername, getUserLoginEssentials };

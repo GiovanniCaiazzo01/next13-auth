@@ -1,5 +1,5 @@
 import { AuthLayout } from "@/layouts";
-import { doRegister, checkAuthParam } from "../../utils/server/utils";
+import { checkAuthParam, doLogin, doRegister } from "@/lib/UTILS/utils";
 
 type AuthPageProps = {
   params: { slug: string };
@@ -13,6 +13,7 @@ const AuthPage = async ({ params }: AuthPageProps) => {
       "Looks like you have found the doorway to the great nothing"
     );
   }
+
   const isLogin = await checkAuthParam(slug);
 
   const leftLabel = isLogin ? "Welcome Back!" : "Welcome Fella!";
@@ -37,7 +38,7 @@ const AuthPage = async ({ params }: AuthPageProps) => {
         rightBottomLabelLeft={rightBottomLabelLeft}
         rightBottomLabelRight={rightBottomLabelRigh}
         rightBottomLink={rightBottomLink}
-        onSubmit={doRegister}
+        onSubmit={slug === "login" ? doLogin : doRegister}
       />
     </div>
   );

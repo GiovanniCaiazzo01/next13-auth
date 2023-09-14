@@ -1,19 +1,21 @@
 "use server";
-import {
-  checkMissingField,
-  generateUID,
-  getCurrentDate,
-  hashString,
-  signJWT,
-} from "@/app/(authentication)/utils/server/utils";
-import { addUser, getUserByName } from "../data-access/auth.repository";
 
-type registerUser = {
+import {
+  addUser,
+  getUserLoginEssentials,
+  getUserUsername,
+} from "../data-access/auth.repository";
+import { getCurrentDate, checkMissingField } from "@/lib/UTILS/utils";
+import { hashString, decryptBcrypt } from "@/lib/BCRYPT/bcrypt";
+import { generateUUID } from "@/lib/UUID/uuid";
+import { signJWT } from "@/lib/JOSE/jose";
+
+type UserCredentials = {
   username: string;
   password: string;
 };
 
-export const register = async (user_credentials: registerUser) => {
+export const register = async (user_credentials: UserCredentials) => {
   const { username, password } = user_credentials;
 
   const have_missing_field = await checkMissingField({ username, password });
@@ -25,7 +27,7 @@ export const register = async (user_credentials: registerUser) => {
   }
 
   try {
-    const user_already_exist = await getUserByName(username);
+    const user_already_exist = await getUserUsername(username);
     if (user_already_exist.result) {
       return {
         result: false,
@@ -45,7 +47,7 @@ export const register = async (user_credentials: registerUser) => {
     jwt_token: "",
   };
   user_payload.password = await hashString(password);
-  user_payload.ucode = await generateUID();
+  user_payload.ucode = await generateUUID();
   user_payload.created_at = await getCurrentDate();
   user_payload.updated_at = await getCurrentDate();
   user_payload.jwt_token = await signJWT();
@@ -55,5 +57,30 @@ export const register = async (user_credentials: registerUser) => {
     new_user && { result: new_user.result, message: new_user.message };
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const login = async (user_credentials: UserCredentials) => {
+  const { username, password } = user_credentials;
+  const have_missing_field = await checkMissingField({ username, password });
+  if (have_missing_field.result) {
+    return {
+      result: false,
+      message: `Hey don't forget your '${have_missing_field.missing_field}' 👺.`,
+    };
+  }
+
+  try {
+    const { data } = await getUserLoginEssentials(username);
+    !username === data?.username && {
+      result: false,
+      message: "Credenziali errate",
+    };
+    const isCorrectpassword = await decryptBcrypt(password, data?.password);
+    !isCorrectpassword && { result: false, message: "Credenziali errate" };
+
+    return { result: true, message: "welcome" };
+  } catch (error) {
+    console.log(error);
   }
 };
