@@ -25,6 +25,7 @@ const checkMissingField = async (fields: {
 };
 
 const doLogin = async (data: FormData) => {
+  "use server";
   const username = data.get("username")?.valueOf();
   const password = data.get("password")?.valueOf();
 
@@ -40,7 +41,7 @@ const doLogin = async (data: FormData) => {
         body: JSON.stringify(payload),
       }
     );
-    console.log(response.json());
+    console.log(await response.json());
     redirect("/");
   } catch (error) {
     console.error(error);
@@ -48,6 +49,7 @@ const doLogin = async (data: FormData) => {
 };
 
 const doRegister = async (data: FormData) => {
+  "use server";
   const username = data.get("username")?.valueOf().toString();
   const password = data.get("password")?.valueOf().toString();
 
@@ -57,15 +59,22 @@ const doRegister = async (data: FormData) => {
   };
 
   try {
-    const response = await fetch("/api/auth/entry-point/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
+    const response = await fetch(
+      "http://localhost:3000/api/auth/entry-point/register",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+        cache: "no-store",
+      }
+    );
+
+    console.log(await response.json());
+    return await response.json();
   } catch (error) {
-    console.error(error);
+    console.error("quiii?", error);
   }
 };
 

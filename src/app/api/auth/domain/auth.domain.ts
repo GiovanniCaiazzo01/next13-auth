@@ -35,7 +35,7 @@ export const register = async (user_credentials: UserCredentials) => {
       };
     }
   } catch (error) {
-    console.error(error);
+    console.error("è qui che si verifica l'errore ?", error);
   }
 
   let user_payload = {
@@ -71,15 +71,22 @@ export const login = async (user_credentials: UserCredentials) => {
   }
 
   try {
-    const { data } = await getUserLoginEssentials(username);
-    !username === data?.username && {
-      result: false,
-      message: "Credenziali errate",
-    };
-    const isCorrectpassword = await decryptBcrypt(password, data?.password);
-    !isCorrectpassword && { result: false, message: "Credenziali errate" };
+    const user = await getUserLoginEssentials(username);
 
-    return { result: true, message: "welcome" };
+    console.log(user);
+
+    // if (username === data?.username) {
+    //   console.log("sono entrato ?");
+
+    //   return { result: false, message: "Credenziali errate" };
+    // }
+
+    // console.log("non dovrei esser qui");
+
+    // const isCorrectpassword = await decryptBcrypt(password, data?.password);
+    // !isCorrectpassword && { result: false, message: "Credenziali errate" };
+
+    // return { result: true, message: "welcome" };
   } catch (error) {
     console.log(error);
   }
