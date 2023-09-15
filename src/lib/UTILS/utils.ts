@@ -1,3 +1,4 @@
+"use server";
 import { redirect } from "next/navigation";
 
 const checkAuthParam = async (param: string): Promise<boolean> => {

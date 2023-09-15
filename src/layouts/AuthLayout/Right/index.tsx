@@ -9,6 +9,7 @@ type RightProps = {
   rightBottomLabelLeft: string;
   rightBottomLabelRight: string;
   rightBottomLink: string;
+  haveEmailField: boolean;
 };
 
 const Right = ({
@@ -20,6 +21,7 @@ const Right = ({
   rightBottomLabelLeft,
   rightBottomLabelRight,
   rightBottomLink,
+  haveEmailField,
 }: RightProps) => {
   return (
     <div className="w-full flex flex-col justify-center items-center">
@@ -37,16 +39,25 @@ const Right = ({
               className="mb-5 border rounded-xl p-3"
               type="text"
               name="username"
-            />
-            <span className="mb-2.5 text-gray-400 font-semibold">
-              User Password
-            </span>
+            />{" "}
+            {haveEmailField && (
+              <>
+                <span className=" mb-2.5 text-gray-400 font-semibold">
+                  Email
+                </span>
+                <input
+                  className="mb-5 border rounded-xl p-3"
+                  type="text"
+                  name="Email"
+                />
+              </>
+            )}
+            <span className="mb-2.5 text-gray-400 font-semibold">Password</span>
             <input
               className=" mb-8 border rounded-xl p-3"
               type="password"
               name="password"
             />
-
             {rightMiddleLink && (
               <div className="flex items-center justify-between flex-wrap mb-8">
                 <div className="flex items-center mb-2 ">
@@ -66,7 +77,6 @@ const Right = ({
                 </Link>
               </div>
             )}
-
             <button
               className="text-white font-semibold p-5 mb-14 bg-violet-500 border rounded-xl "
               type="submit"

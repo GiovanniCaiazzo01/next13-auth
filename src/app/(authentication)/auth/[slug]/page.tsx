@@ -15,6 +15,7 @@ const AuthPage = async ({ params }: AuthPageProps) => {
   }
 
   const isLogin = await checkAuthParam(slug);
+  const haveEmailField = isLogin ? false : true;
   const leftLabel = isLogin ? "Welcome Back!" : "Welcome Fella!";
   const rightTopHeading = isLogin ? "Login" : "Register";
   const buttonLabel = isLogin ? "Login" : "Register";
@@ -27,6 +28,7 @@ const AuthPage = async ({ params }: AuthPageProps) => {
     : "Welcome to our website! 🌟 Get ready to embark on a journey into the world of programming! ";
 
   const handleSubmit = async (data: FormData) => {
+    "use server";
     if (!isLogin)
       return await doRegister(data).then((data) =>
         console.log("register data", data)
@@ -46,6 +48,7 @@ const AuthPage = async ({ params }: AuthPageProps) => {
         rightBottomLabelLeft={rightBottomLabelLeft}
         rightBottomLabelRight={rightBottomLabelRigh}
         rightBottomLink={rightBottomLink}
+        haveEmailField={haveEmailField}
         onSubmit={handleSubmit}
       />
     </div>

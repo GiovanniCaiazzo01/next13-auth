@@ -10,6 +10,7 @@ type AuthProps = {
   rightBottomLabelRight: string;
   buttonLabel: string;
   rightBottomLink: string;
+  haveEmailField: boolean;
 };
 const AuthLayout = ({
   leftLabel,
@@ -20,6 +21,7 @@ const AuthLayout = ({
   rightBottomLabelRight,
   buttonLabel,
   rightBottomLink,
+  haveEmailField,
   onSubmit,
 }: AuthProps) => {
   return (
@@ -33,6 +35,7 @@ const AuthLayout = ({
         rightBottomLabelLeft={rightBottomLabelLeft}
         rightBottomLabelRight={rightBottomLabelRight}
         rightBottomLink={rightBottomLink}
+        haveEmailField={haveEmailField}
         onSubmit={onSubmit}
       />
     </>
