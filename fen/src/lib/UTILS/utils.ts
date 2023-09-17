@@ -1,4 +1,5 @@
 "use server";
+
 import { redirect } from "next/navigation";
 
 const checkAuthParam = async (param: string): Promise<boolean> => {
@@ -42,8 +43,6 @@ const doLogin = async (data: FormData) => {
         body: JSON.stringify(payload),
       }
     );
-    console.log(await response.json());
-    redirect("/");
   } catch (error) {
     console.error(error);
   }
@@ -52,15 +51,17 @@ const doLogin = async (data: FormData) => {
 const doRegister = async (data: FormData) => {
   "use server";
   const username = data.get("username")?.valueOf().toString();
+  const email = data.get("email")?.valueOf().toString();
   const password = data.get("password")?.valueOf().toString();
 
   const payload = {
     username,
+    email,
     password,
   };
-
+  let register_data;
   try {
-    const response = await fetch(
+    register_data = await fetch(
       "http://localhost:3000/api/auth/entry-point/register",
       {
         method: "POST",
@@ -71,12 +72,13 @@ const doRegister = async (data: FormData) => {
         cache: "no-store",
       }
     );
-
-    console.log(await response.json());
-    return await response.json();
   } catch (error) {
-    console.error("quiii?", error);
+    console.error(error);
   }
+
+  const response = await register_data?.json();
+  console.log(response);
+  // register_data.result && redirect("/");
 };
 
 export {

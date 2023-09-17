@@ -39,7 +39,7 @@ const Right = ({
               className="mb-5 border rounded-xl p-3"
               type="text"
               name="username"
-            />{" "}
+            />
             {haveEmailField && (
               <>
                 <span className=" mb-2.5 text-gray-400 font-semibold">
@@ -47,8 +47,8 @@ const Right = ({
                 </span>
                 <input
                   className="mb-5 border rounded-xl p-3"
-                  type="text"
-                  name="Email"
+                  type="email"
+                  name="email"
                 />
               </>
             )}

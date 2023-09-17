@@ -1,5 +1,6 @@
 import { AuthLayout } from "@/layouts";
 import { checkAuthParam, doLogin, doRegister } from "@/lib/UTILS/utils";
+import { redirect } from "next/navigation";
 
 type AuthPageProps = {
   params: { slug: string };
@@ -29,12 +30,9 @@ const AuthPage = async ({ params }: AuthPageProps) => {
 
   const handleSubmit = async (data: FormData) => {
     "use server";
-    if (!isLogin)
-      return await doRegister(data).then((data) =>
-        console.log("register data", data)
-      );
 
-    return await doLogin(data).then((data) => console.log("login data", data));
+    if (!isLogin) return await doRegister(data);
+    return await doLogin(data);
   };
 
   return (

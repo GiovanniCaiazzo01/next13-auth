@@ -3,9 +3,11 @@
 import { NextResponse } from "next/server";
 import { register } from "../../domain/auth.domain";
 
-export async function POST(req: Request, res: NextResponse) {
+export async function POST(req: Request) {
+  const body = await req.json();
+
   const payload = {
-    ...(await req.json()),
+    ...body,
   };
 
   const result = await register(payload);
