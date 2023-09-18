@@ -1,17 +1,18 @@
 {
   "name": "ben",
   "module": "start.ts",
-  "devDependencies": {
-    "bun-types": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
+  "types": "module",
   "scripts": {
-    "dev": "bun start.ts "
+    "dev": "nodemon start.ts"
   },
   "type": "module",
   "dependencies": {
-    "elysia": "^0.6.23"
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongodb": "^6.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }
