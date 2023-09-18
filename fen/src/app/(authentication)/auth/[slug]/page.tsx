@@ -1,5 +1,5 @@
 import { AuthLayout } from "@/layouts";
-import { checkAuthParam, doLogin, doRegister } from "@/lib/UTILS/utils";
+import { checkAuthParam } from "@/lib/UTILS/utils";
 import { redirect } from "next/navigation";
 
 type AuthPageProps = {
@@ -17,7 +17,7 @@ const AuthPage = async ({ params }: AuthPageProps) => {
 
   const isLogin = await checkAuthParam(slug);
   const haveEmailField = isLogin ? false : true;
-  const leftLabel = isLogin ? "Welcome Back!" : "Welcome Fella!";
+  const leftLabel = isLogin ? "Welcome Back!" : "Welcome!";
   const rightTopHeading = isLogin ? "Login" : "Register";
   const buttonLabel = isLogin ? "Login" : "Register";
   const rightBottomLabelLeft = isLogin ? "New User?" : "Already a user?";
@@ -30,9 +30,7 @@ const AuthPage = async ({ params }: AuthPageProps) => {
 
   const handleSubmit = async (data: FormData) => {
     "use server";
-
-    if (!isLogin) return await doRegister(data);
-    return await doLogin(data);
+    // you can put here your formsubmit logic
   };
 
   return (
