@@ -1,3 +1,4 @@
+import { prisma } from "@/db";
 import { AuthLayout } from "@/layouts";
 import { checkAuthParam } from "@/lib/UTILS/utils";
 import { redirect } from "next/navigation";
@@ -30,7 +31,29 @@ const AuthPage = async ({ params }: AuthPageProps) => {
 
   const handleSubmit = async (data: FormData) => {
     "use server";
-    // you can put here your formsubmit logic
+
+    // just to see how it is works
+    const username = data.get("username");
+    const password = data.get("password");
+    const email = data.get("email");
+
+    const isRegister = username && email && password ? true : false;
+    if (isRegister) {
+      await prisma.user.create({ data: { username, password, email } });
+      return redirect("/auth/login");
+    } else {
+      const user = await prisma.user.findFirst({
+        where: {
+          username: {
+            contains: username,
+          },
+        },
+      });
+      if (!user) {
+        return <p>ciao</p>;
+      }
+      return redirect("/");
+    }
   };
 
   return (
